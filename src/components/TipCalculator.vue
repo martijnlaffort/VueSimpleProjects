@@ -72,9 +72,6 @@
                 answer: null
             }
         },
-        props: {
-            msg: String
-        },
         methods: {
             calculate(){
                 // this.answer = this.form.selectedService;
