@@ -34,14 +34,7 @@
         </div>
     </div>
 </template>
-<!--                <div class = "dropdown" id="serviceDropdown">-->
-<!--                     v-model="form.selectedService"-->
-<!--                     text="Select Item"-->
-<!--                     variant="primary"-->
-<!--                     class="m-md-2">>-->
-<!--                    <div class="dropdown-menu" disabled value="0">Select an Item</div>-->
 
-<!--                </div>-->
 <script>
     export default {
         name: 'HelloWorld',
@@ -74,29 +67,13 @@
         },
         methods: {
             calculate(){
-                // this.answer = this.form.selectedService;
                 this.answer = this.form.amount * (this.form.selectedService / 100) / this.form.people
             },
         }
 
     }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    h3 {
-        margin: 40px 0 0;
-    }
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-    a {
-        color: #42b983;
-    }
     .center {
         left: 50%;
         transform: translate(-50%, 0);
