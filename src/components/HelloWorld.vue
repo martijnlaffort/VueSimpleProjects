@@ -9,18 +9,39 @@
                     <input class="form-control" v-model="form.amount" type="number" placeholder="Bill Amount">
                 </div>
                 <p class="text-left">How was your service?</p>
-                <select v-model="form.selected">
-                    <option disabled value="">Please select one</option>
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
-                </select>
-                <button @click="calculate">CALCULATE!</button>
+                <div class="dropdown text-left dropd">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Choose an option
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-item" v-for="option in form.serviceOptions"
+                             :key="option.value"
+                             :value="option.value"
+                             @click="form.selectedService = option.value">
+                            {{option.text}}
+                        </div>
+                    </div>
+                    <span>Tip percentage: {{ form.selectedService }}%</span>
+                </div>
+                <p class="text-left">How many people are sharing the bill?</p>
+                <div class="input-group mb-3">
+                    <input class="form-control" v-model="form.people" type="number" placeholder="Number of people">
+                    <span class="input-group-text">people</span>
+                </div>
+                <button @click="calculate" class="btnCal">CALCULATE!</button>
+                {{answer}}
             </div>
         </div>
     </div>
 </template>
+<!--                <div class = "dropdown" id="serviceDropdown">-->
+<!--                     v-model="form.selectedService"-->
+<!--                     text="Select Item"-->
+<!--                     variant="primary"-->
+<!--                     class="m-md-2">>-->
+<!--                    <div class="dropdown-menu" disabled value="0">Select an Item</div>-->
 
+<!--                </div>-->
 <script>
     export default {
         name: 'HelloWorld',
@@ -28,8 +49,27 @@
             return{
                 form: {
                     amount: null,
-                    selected: null
-                }
+                    selected: null,
+                    service: null,
+                    selectedService: null,
+                    people: null,
+                    serviceOptions: [
+                        {
+                            "value": "5",
+                            "text": "Bad"
+                        },
+                        {
+                            "value": "10",
+                            "text": "Average"
+                        },
+                        {
+                            "value": "15",
+                            "text": "Good"
+                        }
+                    ],
+
+                },
+                answer: null
             }
         },
         props: {
@@ -37,9 +77,10 @@
         },
         methods: {
             calculate(){
-
-            }
+                this.answer = this.form.amount * (this.form.selectedService.value / 100) / this.form.people
+            },
         }
+
     }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -61,5 +102,11 @@
     .center {
         left: 50%;
         transform: translate(-50%, 0);
+    }
+    .btnCal {
+        margin-top: 1em;
+    }
+    .dropd {
+        margin-bottom: 1em;
     }
 </style>
