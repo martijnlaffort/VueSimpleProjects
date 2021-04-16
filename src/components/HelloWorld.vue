@@ -29,7 +29,7 @@
                     <span class="input-group-text">people</span>
                 </div>
                 <button @click="calculate" class="btnCal">CALCULATE!</button>
-                {{answer}}
+                <p>Your tip should be: {{answer}}</p>
             </div>
         </div>
     </div>
@@ -77,7 +77,8 @@
         },
         methods: {
             calculate(){
-                this.answer = this.form.amount * (this.form.selectedService.value / 100) / this.form.people
+                // this.answer = this.form.selectedService;
+                this.answer = this.form.amount * (this.form.selectedService / 100) / this.form.people
             },
         }
 
@@ -105,6 +106,7 @@
     }
     .btnCal {
         margin-top: 1em;
+        margin-bottom: 1em;
     }
     .dropd {
         margin-bottom: 1em;
