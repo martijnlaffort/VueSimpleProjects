@@ -80,8 +80,4 @@
         left: 50%;
         transform: translate(-50%, 0);
     }
-
-    .dropd {
-        margin-bottom: 1em;
-    }
 </style>
