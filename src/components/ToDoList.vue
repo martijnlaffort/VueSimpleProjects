@@ -4,6 +4,7 @@
         <div class="input-group mb-3">
             <input class="form-control" v-model="thing" type="text" placeholder="What do you want to add to your list?">
             <button @click="addThing" class="btn btn-success">Add</button>
+            <button @click="created" class="btn btn-success">cookie</button>
         </div>
                 <div class="row table table-striped">
                     <table class="table table-striped">
@@ -46,6 +47,7 @@
                 things: []
             }
         },
+
         methods: {
             addThing(){
                 this.things.push({
@@ -67,7 +69,10 @@
             deleteThing(index){
                 this.things.splice(index, 1)
             },
-        }
+            created() {
+                this.$cookies.set("keyName", "keyValue", 60);
+            }
+        },
     }
 </script>
 
