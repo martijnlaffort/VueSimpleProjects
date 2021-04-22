@@ -4,6 +4,7 @@
             <div class="nav navbar-nav">
                 <router-link to="/" class="nav-item nav-link">TipCalculator</router-link>
                 <router-link to="/todolist" class="nav-item nav-link">ToDoList</router-link>
+                <router-link to="/quiz" class="nav-item nav-link">Quiz</router-link>
             </div>
         </div>
     </nav>
