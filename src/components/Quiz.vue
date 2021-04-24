@@ -2,21 +2,35 @@
     <div class="container">
         <p>Hi, this is the quiz page</p>
         <div id="app">
-            <button @click="toggle = !toggle" class="btn btn-info flex">Create new quiz</button>
+            <button @click="toggle = !toggle" class="btn btn-info flex mb-2">Create new quiz</button>
             <div class="block" v-show="toggle">
                 <div class="input-group mb-2">
-                    <input class="form-control mr-2" type="text" placeholder="Name of the quiz">
-                    <input class="form-control ml-2" type="text" placeholder="Name of the maker">
+                    <input class="form-control mr-2" type="text" v-model="quizName" placeholder="Name of the quiz" required>
+                    <input class="form-control ml-2" type="text" v-model="makerName" placeholder="Name of the maker" required>
                 </div>
-                <button class="btn btn-success">Save</button>
+                <div class="flex">
+                    <button @click="toggle = !toggle" class="btn btn-danger">Cancel</button>
+                    <button @click="makeQuiz" class="btn btn-success ml-3">Save</button>
+                </div>
         </div>
-
-        <div class="block">
-            <div class="miniblock" v-for="quiz in quizzes" v-bind:key="quiz.quizName">
-                {{quiz.quizName}}
-                {{quiz.makerName}}
+            <div class="quizAll">
+                <div v-for="(value, i) in quizzes" v-bind:key="i">
+                    <div class="quizSingle" v-if="value.totalQuizName !== ''">
+                        <div class="ml-3">
+                            Quiz: {{value.totalQuizName}}
+                        </div>
+                        <div class="ml-3">
+                        Made by: {{value.totalMakerName}}
+                        </div>
+                        <div class="flexright">
+                            <button @click="deleteQuiz(i)" class="btn btn-danger">Delete</button>
+                            <router-link to="/quiz/:quizId" class="nav-item nav-link">
+                                <button class="btn btn-primary">View</button>
+                            </router-link>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
     </div>
     </div>
 </template>
@@ -29,18 +43,35 @@
                 toggle: false,
                 quizName: null,
                 makerName: null,
-                quizzes: [
-                    this.quizName, this.makerName
-                ]
+                quizzes: [{
+                    totalQuizName: '',
+                    totalMakerName: '',
+                }]
             }
-        },
+        },methods: {
+            makeQuiz(){
+                this.quizzes.push({
+                    toggle: true,
+                    totalQuizName: this.quizName,
+                    totalMakerName: this.makerName,
+                })
+                this.quizName = ""
+                this.makerName = ""
+            },
+            deleteQuiz(index){
+                this.quizzes.splice(index, 1)
+            }
+        }
     }
 </script>
 
 <style scoped>
     .flex{
         display: flex;
-        margin-bottom: 2em;
+    }
+    .flexright{
+        display: flex;
+        justify-content: flex-end;
     }
     .center {
         left: 50%;
@@ -51,7 +82,7 @@
     outline-width: medium;
     outline-style: auto;
     outline-color: black;
-    background-color: cadetblue;
+    background-color: gray;
 }
     .miniblock{
         background-color: white;
@@ -60,5 +91,17 @@
         outline-width: thin;
         max-width: 400px;
         margin: 2em;
+    }
+    .quizAll{
+        margin-top: 2em;
+        background-color: aliceblue;
+    }
+    .quizSingle{
+        text-align: left;
+        font-size: large;
+        margin: 0.5em;
+        outline-width: thin;
+        outline-color: black;
+        outline-style: auto;
     }
 </style>

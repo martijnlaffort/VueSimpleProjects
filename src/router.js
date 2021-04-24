@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import TipCalculator from "./components/TipCalculator";
 import ToDoList from "./components/ToDoList";
 import Quiz from "./components/Quiz";
+import SingleQuiz from "./components/SingleQuiz";
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path: '/quiz',
         name: 'Quiz',
         component: Quiz
+    },
+    {
+        path: '/quiz/:quizId',
+        name: 'SingleQuiz',
+        component: SingleQuiz
     }
 ]
 
