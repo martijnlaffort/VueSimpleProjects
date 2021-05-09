@@ -21,9 +21,9 @@ const routes = [
         component: Quiz
     },
     {
-        path: '/quiz/:quizId',
+        path: '/quiz/:Qid',
         name: 'SingleQuiz',
-        component: SingleQuiz
+        component: SingleQuiz,
     }
 ]
 

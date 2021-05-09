@@ -20,13 +20,11 @@
                             Quiz: {{value.totalQuizName}}
                         </div>
                         <div class="ml-3">
-                        Made by: {{value.totalMakerName}}
+                            Made by: {{value.totalMakerName}}
                         </div>
                         <div class="flexright">
                             <button @click="deleteQuiz(i)" class="btn btn-danger">Delete</button>
-                            <router-link to="/quiz/:quizId" class="nav-item nav-link">
-                                <button class="btn btn-primary">View</button>
-                            </router-link>
+                            <button @click="goToSingleQuiz(i)" class="btn btn-primary">View</button>
                         </div>
                     </div>
                 </div>
@@ -60,6 +58,9 @@
             },
             deleteQuiz(index){
                 this.quizzes.splice(index, 1)
+            },
+            goToSingleQuiz(index){
+                this.$router.push({name: 'SingleQuiz', params: {Qid:index}})
             }
         }
     }

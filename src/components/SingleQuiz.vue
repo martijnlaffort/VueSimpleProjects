@@ -1,10 +1,11 @@
 <template>
-    <p>Hi</p>
-</template>
+    <h2>Hi</h2>
 
+</template>
 <script>
     export default {
-        name: "SingleQuiz"
+        name: "SingleQuiz",
+
     }
 </script>
 
