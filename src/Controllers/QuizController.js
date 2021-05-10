@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 QuizModel = mongoose.model('QuizModel')
 
-exports.list_all_quizzes = function (req, res) {
+list_all_quizzes = function (req, res) {
     QuizModel.find({}, function (err, exercise) {
         if (err){
             res.send(err)
@@ -10,7 +10,7 @@ exports.list_all_quizzes = function (req, res) {
         }
     })
 }
-exports.create_a_quiz = function (req, res) {
+create_a_quiz = function (req, res) {
     let new_exercise = new QuizModel(req.body)
     new_exercise.save(function(err, exercise){
         if(err)
@@ -19,7 +19,7 @@ exports.create_a_quiz = function (req, res) {
 
     })
 }
-exports.read_a_quiz = function (req, res) {
+read_a_quiz = function (req, res) {
     QuizModel.findById(req.params.id, function (err, exercise) {
         if(err){
             res.send(err)
@@ -28,7 +28,7 @@ exports.read_a_quiz = function (req, res) {
         }
     })
 }
-exports.update_a_quiz = function (req, res) {
+update_a_quiz = function (req, res) {
     QuizModel.updateOne(req.params.id, function (err, exercise) {
         if(err){
             res.send(err)
@@ -37,7 +37,7 @@ exports.update_a_quiz = function (req, res) {
         }
     })
 }
-exports.delete_a_quiz = function (req, res) {
+delete_a_quiz = function (req, res) {
     QuizModel.deleteOne(req.params.id, function (err, exercise) {
         if(err){
             res.send(err)
