@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
+    useCreateIndex: true
 }
 
 async function mongo(dbName) {
@@ -19,3 +19,4 @@ async function mongo(dbName) {
 
 module.exports = mongo;
 // await mongoose.connect(`${process.env.MONGO_URL}/${dbName}`, options)
+// await mongoose.connect(`${process.env.MONGO_URL}`, options)

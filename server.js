@@ -1,15 +1,21 @@
 const express = require('express');
 const path = require('path');
 const serveStatic = require('serve-static');
-app = express();
+const bodyParser = require('body-parser')
+const app = express();
 app.use(serveStatic(__dirname + "/dist"));
-const port = process.env.PORT || 7070;
-const hostname = '127.0.0.1';
+app.use(bodyParser.urlencoded({extended: true}))
+const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    console.log(res.send('Hi World!'));
-})
+require('dotenv').config({path: __dirname + '/.env'})
 
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+const mongo = require('./mongo')
+
+app.listen(port, () => {
+    console.log(`Server running on port:${port}/`);
 });
+
+
+mongo(process.env.MONGO_PROD_DB);
+
+module.exports = app;
