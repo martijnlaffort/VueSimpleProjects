@@ -5,87 +5,117 @@
             <button @click="toggle = !toggle" class="btn btn-info flex mb-2">Create new quiz</button>
             <div class="block" v-show="toggle">
                 <div class="input-group mb-2">
-                    <input class="form-control mr-2" type="text" v-model="quizName" placeholder="Name of the quiz" required>
-                    <input class="form-control ml-2" type="text" v-model="makerName" placeholder="Name of the maker" required>
+                    <input class="form-control mr-2" type="text" v-model="Quiz.quizName" placeholder="Name of the quiz" required>
+                    <input class="form-control ml-2" type="text" v-model="Quiz.quizMaker" placeholder="Name of the maker" required>
                 </div>
                 <div class="flex">
                     <button @click="toggle = !toggle" class="btn btn-danger">Cancel</button>
                     <button @click="makeQuiz" class="btn btn-success ml-3">Save</button>
                 </div>
+            </div>
         </div>
-            <div class="quizAll">
-                <div v-for="(value, i) in quizzes" v-bind:key="i">
-                    <div class="quizSingle" v-if="value.totalQuizName !== ''">
-                        <div class="ml-3">
-                            Quiz: {{value.totalQuizName}}
-                        </div>
-                        <div class="ml-3">
-                            Made by: {{value.totalMakerName}}
-                        </div>
-                        <div class="flexright">
-                            <button @click="deleteQuiz(i)" class="btn btn-danger">Delete</button>
-                            <button @click="goToSingleQuiz(i)" class="btn btn-primary">View</button>
-                        </div>
+        <div class="quizAll">
+            <div v-for="(value, i) in AllQuizzes" v-bind:key="i">
+                <div class="quizSingle" v-if="value.quizName !== ''">
+                    <div class="ml-3">
+                        Quiz: {{value.quizName}}
+                    </div>
+                    <div class="ml-3">
+                        Made by: {{value.quizMaker}}
+                    </div>
+                    <div class="flexright">
+                        <button @click="deleteQuiz" class="btn btn-danger">Delete</button>
+                        <button @click="goToSingleQuiz(i)" class="btn btn-primary">View</button>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "Quiz",
-        data(){
-            return{
-                toggle: false,
+export default {
+    name: "Quiz",
+    data() {
+        return {
+            toggle: false,
+            Quiz: {
                 quizName: null,
-                makerName: null,
-                quizzes: [{
-                    totalQuizName: '',
-                    totalMakerName: '',
-                }]
-            }
-        },methods: {
-            makeQuiz(){
-                this.quizzes.push({
-                    toggle: true,
-                    totalQuizName: this.quizName,
-                    totalMakerName: this.makerName,
-                })
-                this.quizName = ""
-                this.makerName = ""
+                quizMaker: null
             },
-            deleteQuiz(index){
-                this.quizzes.splice(index, 1)
-            },
-            goToSingleQuiz(index){
-                this.$router.push({name: 'SingleQuiz', params: {Qid:index}})
-            }
+            AllQuizzes: []
         }
+    },
+    methods: {
+        makeQuiz() {
+            const newQuiz = {
+                quizName: this.Quiz.quizName,
+                quizMaker: this.Quiz.quizMaker
+            }
+
+            window.axios.post('/api/quiz', newQuiz, {
+                headers: {'Content-Type': 'application/json'}
+            })
+                .then(() => {
+                    this.getQuizzes()
+                    this.toggle = false
+                    this.Quiz = {quizName: null, quizMaker: null}
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        },
+        deleteQuiz() {
+            window.axios.delete('/api/quiz/:' + this.AllQuizzes.id,
+                {headers: {'Content-Type': 'application/json'}}
+            ).then(() => {
+                this.getQuizzes()
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        goToSingleQuiz(index) {
+            this.$router.push({name: 'SingleQuiz', params: {Qid: index}})
+        },
+        getQuizzes() {
+            window.axios.get('/api/quiz')
+                .then((response) => {
+                    this.AllQuizzes = response.data;
+                })
+                .catch((error) => {
+                    console.log(error)
+            })
+        }
+    },
+    created() {
+        this.getQuizzes();
     }
+}
 </script>
 
 <style scoped>
-    .flex{
+    .flex {
         display: flex;
     }
-    .flexright{
+
+    .flexright {
         display: flex;
         justify-content: flex-end;
     }
+
     .center {
         left: 50%;
         transform: translate(-50%, 0);
     }
 
-.block{
-    outline-width: medium;
-    outline-style: auto;
-    outline-color: black;
-    background-color: gray;
-}
-    .miniblock{
+    .block {
+        outline-width: medium;
+        outline-style: auto;
+        outline-color: black;
+        background-color: gray;
+    }
+
+    .miniblock {
         background-color: white;
         outline-color: black;
         outline-style: auto;
@@ -93,11 +123,13 @@
         max-width: 400px;
         margin: 2em;
     }
-    .quizAll{
+
+    .quizAll {
         margin-top: 2em;
         background-color: aliceblue;
     }
-    .quizSingle{
+
+    .quizSingle {
         text-align: left;
         font-size: large;
         margin: 0.5em;
