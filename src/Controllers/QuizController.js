@@ -38,7 +38,7 @@ exports.update_a_quiz = function (req, res) {
     })
 }
 exports.delete_a_quiz = function (req, res) {
-    QuizModel.findByIdAndDelete(req.params.id, function (err, quiz) {
+    QuizModel.findByIdAndDelete(req.body.id, function (err, quiz) {
         if(err){
             res.send(err)
         }else {
@@ -46,5 +46,3 @@ exports.delete_a_quiz = function (req, res) {
         }
     })
 }
-
-

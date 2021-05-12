@@ -5,8 +5,8 @@
             <button @click="toggle = !toggle" class="btn btn-info flex mb-2">Create new quiz</button>
             <div class="block" v-show="toggle">
                 <div class="input-group mb-2">
-                    <input class="form-control mr-2" type="text" v-model="quizName" placeholder="Name of the quiz" required>
-                    <input class="form-control ml-2" type="text" v-model="makerName" placeholder="Name of the maker" required>
+                    <input class="form-control mr-2" type="text" v-model="Quiz.quizName" placeholder="Name of the quiz" required>
+                    <input class="form-control ml-2" type="text" v-model="Quiz.quizMaker" placeholder="Name of the maker" required>
                 </div>
                 <div class="flex">
                     <button @click="toggle = !toggle" class="btn btn-danger">Cancel</button>
@@ -21,10 +21,10 @@
                         Quiz: {{value.quizName}}
                     </div>
                     <div class="ml-3">
-                        Made by: {{value.makerName}}
+                        Made by: {{value.quizMaker}}
                     </div>
                     <div class="flexright">
-                        <button @click="deleteQuiz(i)" class="btn btn-danger">Delete</button>
+                        <button @click="deleteQuiz" class="btn btn-danger">Delete</button>
                         <button @click="goToSingleQuiz(i)" class="btn btn-primary">View</button>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ export default {
             toggle: false,
             Quiz: {
                 quizName: null,
-                makerName: null
+                quizMaker: null
             },
             AllQuizzes: []
         }
@@ -50,7 +50,7 @@ export default {
         makeQuiz() {
             const newQuiz = {
                 quizName: this.Quiz.quizName,
-                makerName: this.Quiz.makerName
+                quizMaker: this.Quiz.quizMaker
             }
 
             window.axios.post('/api/quiz', newQuiz, {
@@ -58,22 +58,21 @@ export default {
             })
                 .then(() => {
                     this.getQuizzes()
-                    this.toggle = true
-                    this.Quiz = {quizName: null, makerName: null}
+                    this.toggle = false
+                    this.Quiz = {quizName: null, quizMaker: null}
                 })
                 .catch(error => {
                     console.error(error);
                 })
         },
-        deleteQuiz(index) {
-            window.axios.delete('/api/quiz/:' + index,
+        deleteQuiz() {
+            window.axios.delete('/api/quiz/:' + this.AllQuizzes.id,
                 {headers: {'Content-Type': 'application/json'}}
             ).then(() => {
                 this.getQuizzes()
             }).catch(error => {
                 console.log(error)
             })
-
         },
         goToSingleQuiz(index) {
             this.$router.push({name: 'SingleQuiz', params: {Qid: index}})
@@ -85,7 +84,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error)
-                })
+            })
         }
     },
     created() {
