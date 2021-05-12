@@ -1,62 +1,50 @@
 const mongoose = require('mongoose')
-QuizModel = mongoose.model('QuizModel')
+QuizModel = mongoose.model('QuizSchema')
 
+//export called on all functions, these are later used in QuizRoute
 exports.list_all_quizzes = function (req, res) {
-    QuizModel.find({}, function (err, exercise) {
+    QuizModel.find({}, function (err, quiz) {
         if (err){
             res.send(err)
         }else{
-            res.json(exercise)
+            res.json(quiz)
         }
     })
 }
 exports.create_a_quiz = function (req, res) {
-    let new_exercise = new QuizModel(req.body)
-    new_exercise.save(function(err, exercise){
+    let new_quiz = new QuizModel(req.body)
+    new_quiz.save(function(err, quiz){
         if(err)
             res.send(err)
-        res.json(exercise)
-
+        res.json(quiz)
     })
 }
 exports.read_a_quiz = function (req, res) {
-    QuizModel.findById(req.params.id, function (err, exercise) {
+    QuizModel.findById(req.params.id, function (err, quiz) {
         if(err){
             res.send(err)
         }else {
-            res.json(exercise)
+            res.json(quiz)
         }
     })
 }
 exports.update_a_quiz = function (req, res) {
-    QuizModel.updateOne(req.params.id, function (err, exercise) {
+    QuizModel.findByIdAndUpdate(req.params.id, req.body, function (err, quiz) {
         if(err){
             res.send(err)
         }else {
-            res.json(exercise)
+            res.json(quiz)
         }
     })
 }
 exports.delete_a_quiz = function (req, res) {
-    QuizModel.deleteOne(req.params.id, function (err, exercise) {
+    QuizModel.findByIdAndDelete(req.params.id, function (err, quiz) {
         if(err){
             res.send(err)
         }else {
-            res.json(exercise)
+            res.json(quiz)
         }
     })
 }
 
-module.exports = function (app){
 
-    app.route('/api/quiz')
-        .get(list_all_quizzes)
-        .post(create_a_quiz)
-        .put(update_a_quiz)
-
-
-    app.route('/api/quiz/:quizId')
-        .get(read_a_quiz)
-        .delete(delete_a_quiz)
-    //let hier op de url zonder /
-}
