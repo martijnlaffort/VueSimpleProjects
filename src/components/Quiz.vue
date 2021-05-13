@@ -24,7 +24,7 @@
                         Made by: {{value.quizMaker}}
                     </div>
                     <div class="flexright">
-                        <button @click="deleteQuiz" class="btn btn-danger">Delete</button>
+                        <button @click="deleteQuiz(i)" class="btn btn-danger">Delete</button>
                         <button @click="goToSingleQuiz(i)" class="btn btn-primary">View</button>
                     </div>
                 </div>
@@ -65,8 +65,8 @@ export default {
                     console.error(error);
                 })
         },
-        deleteQuiz() {
-            window.axios.delete('/api/quiz/:' + this.AllQuizzes.id,
+        deleteQuiz(index) {
+            window.axios.delete('/api/quiz/' + this.AllQuizzes[index]._id,
                 {headers: {'Content-Type': 'application/json'}}
             ).then(() => {
                 this.getQuizzes()
