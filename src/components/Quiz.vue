@@ -2,7 +2,9 @@
     <div class="container">
         <p>Hi, this is the quiz page</p>
         <div id="app">
-            <button @click="toggle = !toggle" class="btn btn-info flex mb-2">Create new quiz</button>
+            <div class="flexright">
+                <button @click="toggle = !toggle" class="btn btn-info quizbtn">Create new quiz</button>
+            </div>
             <div class="block" v-show="toggle">
                 <div class="input-group mb-2">
                     <input class="form-control mr-2" type="text" v-model="Quiz.quizName" placeholder="Name of the quiz" required>
@@ -15,8 +17,8 @@
             </div>
         </div>
         <div class="quizAll">
-            <div v-for="(value, i) in AllQuizzes" v-bind:key="i">
-                <div class="quizSingle" v-if="value.quizName !== ''">
+            <div v-for="(value, i) in AllQuizzes" v-bind:key="i" class="quizSingle">
+                <div v-if="value.quizName !== ''">
                     <div class="ml-3">
                         Quiz: {{value.quizName}}
                     </div>
@@ -29,6 +31,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="parent">
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
         </div>
     </div>
 </template>
@@ -125,16 +137,39 @@ export default {
     }
 
     .quizAll {
-        margin-top: 2em;
-        background-color: aliceblue;
+        /*margin-top: 2em;*/
+        /*background-color: aliceblue;*/
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .quizSingle {
+        flex: 1 0 45%;
         text-align: left;
         font-size: large;
-        margin: 0.5em;
-        outline-width: thin;
-        outline-color: black;
-        outline-style: auto;
+        margin: 5px;
+        height: 100px;
+        /*outline-width: thin;*/
+        /*outline-color: black;*/
+        /*outline-style: auto;*/
+    }
+
+    .quizbtn {
+        border-radius: 20px;
+        margin-right: 2em;
+    }
+    .quizbtn:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .parent {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .child {
+        flex: 1 0 21%; /* explanation below */
+        margin: 5px;
+        height: 100px;
+        background-color: blue;
     }
 </style>
