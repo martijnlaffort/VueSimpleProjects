@@ -7,12 +7,12 @@
             </div>
             <div class="block" v-show="toggle">
                 <div class="input-group mb-2">
-                    <input class="form-control mr-2" type="text" v-model="Quiz.quizName" placeholder="Name of the quiz" required>
-                    <input class="form-control ml-2" type="text" v-model="Quiz.quizMaker" placeholder="Name of the maker" required>
+                    <input class="form-control quizform" type="text" v-model="Quiz.quizName" placeholder="Name of the quiz" required>
+                    <input class="form-control quizform" type="text" v-model="Quiz.quizMaker" placeholder="Name of the maker" required>
                 </div>
-                <div class="flex">
+                <div class="flexright">
+                    <button @click="makeQuiz" class="btn btn-success mr-3">Save</button>
                     <button @click="toggle = !toggle" class="btn btn-danger">Cancel</button>
-                    <button @click="makeQuiz" class="btn btn-success ml-3">Save</button>
                 </div>
             </div>
         </div>
@@ -20,9 +20,7 @@
             <div v-for="(value, i) in AllQuizzes" v-bind:key="i" class="quizSingle">
                 <div v-if="value.quizName !== ''">
                     <div class="ml-3">
-                        Quiz: {{value.quizName}}
-                    </div>
-                    <div class="ml-3">
+                        Quiz: {{value.quizName}}<br>
                         Made by: {{value.quizMaker}}
                     </div>
                     <div class="flexright">
@@ -31,16 +29,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="parent">
-            <div class="child"></div>
-            <div class="child"></div>
-            <div class="child"></div>
-            <div class="child"></div>
-            <div class="child"></div>
-            <div class="child"></div>
-            <div class="child"></div>
-            <div class="child"></div>
         </div>
     </div>
 </template>
@@ -109,24 +97,46 @@ export default {
     .flex {
         display: flex;
     }
-
     .flexright {
         display: flex;
         justify-content: flex-end;
     }
-
-    .center {
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-
     .block {
         outline-width: medium;
         outline-style: auto;
         outline-color: black;
-        background-color: gray;
+        background-color: lightblue;
+        margin-top: 1em;
     }
-
+    .quizAll {
+        margin-top: 2em;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .quizSingle {
+        flex: 1 0 45%;
+        text-align: left;
+        font-size: large;
+        margin: 5px;
+        height: 100px;
+        background-color: aliceblue;
+        outline-width: thin;
+        outline-color: black;
+        outline-style: auto;
+    }
+    .quizSingle:hover {
+        background-color: lightblue;
+    }
+    .quizbtn {
+        border-radius: 20px;
+        margin-right: 2em;
+    }
+    .quizbtn:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .quizform {
+        margin: 1em;
+    }
     .miniblock {
         background-color: white;
         outline-color: black;
@@ -135,41 +145,9 @@ export default {
         max-width: 400px;
         margin: 2em;
     }
-
-    .quizAll {
-        /*margin-top: 2em;*/
-        /*background-color: aliceblue;*/
-        display: flex;
-        flex-wrap: wrap;
+    .center {
+        left: 50%;
+        transform: translate(-50%, 0);
     }
 
-    .quizSingle {
-        flex: 1 0 45%;
-        text-align: left;
-        font-size: large;
-        margin: 5px;
-        height: 100px;
-        /*outline-width: thin;*/
-        /*outline-color: black;*/
-        /*outline-style: auto;*/
-    }
-
-    .quizbtn {
-        border-radius: 20px;
-        margin-right: 2em;
-    }
-    .quizbtn:hover {
-        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    }
-    .parent {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .child {
-        flex: 1 0 21%; /* explanation below */
-        margin: 5px;
-        height: 100px;
-        background-color: blue;
-    }
 </style>
