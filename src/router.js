@@ -3,11 +3,17 @@ import TipCalculator from "./components/TipCalculator";
 import ToDoList from "./components/ToDoList";
 import Quiz from "./components/Quiz";
 import SingleQuiz from "./components/SingleQuiz";
+import Home from "./components/Home";
 
 const routes = [
     {
         path: '/',
-        name: 'Dashboard',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/tipcalculator',
+        name: 'TipCalculator',
         component: TipCalculator
     },
     {
