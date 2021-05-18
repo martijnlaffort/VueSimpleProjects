@@ -8,8 +8,8 @@ module.exports = function (app){
         .post(quizController.create_a_quiz)
 
     //routes with the neccessary id
-    app.route('/api/quiz/:quizId')
+    app.route('/api/quiz/:id')
         .get(quizController.read_a_quiz)
-        .put(quizController.update_a_quiz)
         .delete(quizController.delete_a_quiz)
+        .put(quizController.update_a_quiz)
 }
