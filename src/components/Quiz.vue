@@ -24,8 +24,8 @@
                         Made by: {{value.quizMaker}}
                     </div>
                     <div class="flexright">
+                        <router-link :to="{ name: 'SingleQuiz', params: {quizId: i}}" class="btn btn-primary mr-2">View</router-link>
                         <button @click="deleteQuiz(i)" class="btn btn-danger">Delete</button>
-                        <button @click="goToSingleQuiz(i)" class="btn btn-primary">View</button>
                     </div>
                 </div>
             </div>

@@ -27,8 +27,9 @@ const routes = [
         component: Quiz
     },
     {
-        path: '/quiz/:Qid',
+        path: '/quiz/:quizId/singlequiz',
         name: 'SingleQuiz',
+        props: true,
         component: SingleQuiz,
     }
 ]
