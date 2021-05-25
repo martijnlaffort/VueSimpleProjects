@@ -1,5 +1,5 @@
 <template>
-    <h2>Hii</h2>
+    <h2>Hii {{quizId}}</h2>
     <div v-for="(value, i) in Quiz" v-bind:key="i" class="quizSingle">
         <div v-if="value.quizName !== ''">
             <div class="ml-3">
@@ -12,7 +12,7 @@
 <script>
     export default {
         name: "SingleQuiz",
-        props: ["id"],
+        props: ["quizId"],
         data() {
             return {
                 AllQuizzes: [],
@@ -30,7 +30,7 @@
                     })
             },
             getSingleQuiz(){
-                window.axios.get('/api/quiz' + this.AllQuizzes[this.params.quizId]._id)
+                window.axios.get('/api/quiz/' + this.AllQuizzes)
                     .then((response) => {
                         this.Quiz = response.data;
                     })
@@ -39,9 +39,9 @@
                     })
             }
         },
-        created() {
+        mounted() {
             this.getQuizzes();
-            this.getSingleQuiz()
+            this.getSingleQuiz();
         }
     }
 </script>

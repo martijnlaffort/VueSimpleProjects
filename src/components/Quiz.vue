@@ -74,9 +74,7 @@ export default {
                 console.log(error)
             })
         },
-        goToSingleQuiz(index) {
-            this.$router.push({name: 'SingleQuiz', params: {Qid: index}})
-        },
+
         getQuizzes() {
             window.axios.get('/api/quiz')
                 .then((response) => {
