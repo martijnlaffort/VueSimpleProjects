@@ -11,6 +11,7 @@ app.use(bodyParser.json())
 app.use(cors());
 
 const Quiz = require('./src/Schemas/QuizModel')
+const Question = require('./src/Schemas/QuestionModel')
 
 require('dotenv').config({path: __dirname + '/.env'})
 
@@ -24,5 +25,7 @@ mongo(process.env.MONGO_PROD_DB);
 
 let QuizRoute = require('./src/routes/QuizRoute')
 QuizRoute(app)
+let QuestionRoute = require('./src/routes/QuestionRouter')
+QuestionRoute(app)
 
 module.exports = app;

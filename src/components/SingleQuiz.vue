@@ -1,12 +1,19 @@
 <template>
     <h2>Hii {{quizId}}</h2>
-    <div v-for="(value, i) in Quiz" v-bind:key="i" class="quizSingle">
-        <div v-if="value.quizName !== ''">
-            <div class="ml-3">
-                Quiz: {{value.quizName}}<br>
-                Made by: {{value.quizMaker}}
+    <div class="container">
+        <input class="form-control" type="text" v-model="question" placeholder="Type your question" required>
+    <div v-for="(value, i) in AllQuestions" v-bind:key="i">
+        {{value.question}}
+    </div>
+        <input class="form-control" type="number" v-model="Answer.optionNumber" placeholder="How many answers" required>
+        <div v-for="(number, i) in Answer.optionNumber" v-bind:key="number">
+            <p>Answer: {{number}} {{i}}</p>
+            <div class="input-group">
+                <input class="form-control" type="text" v-model="Answer.answerBody" placeholder="Type your question" required>
+                <button><input class="bi-bag-check" type="checkbox" v-model="Answer.isCorrectAnswer">Correct answer</button>
             </div>
         </div>
+        <button @click="makeQuestion" class="btn btn-success mr-3">Save</button>
     </div>
 
 </template>
@@ -16,52 +23,45 @@
         props: ["quizId"],
         data() {
             return {
-                AllQuizzes: [],
+                AllQuestions: [],
                 Quiz: [],
-                Question: null
+                question: null,
+                Answer: {
+                    optionNumber: 0,
+                    answerBody: null,
+                    isCorrectAnswer: false
+                }
             }
         },
         methods: {
             makeQuestion() {
                 const newQuestion = {
-                    quizName: this.Quiz.quizName,
-                    quizMaker: this.Quiz.quizMaker
+                    question: this.question,
+                    answerOptions: this.Answer
                 }
 
-                window.axios.post('/api/quiz', newQuiz, {
+                window.axios.post('/api/question', newQuestion, {
                     headers: {'Content-Type': 'application/json'}
                 })
                     .then(() => {
-                        this.getQuizzes()
-                        this.toggle = false
-                        this.Quiz = {quizName: null, quizMaker: null}
+                        this.getQuestions()
                     })
                     .catch(error => {
                         console.error(error);
                     })
             },
-            getQuizzes() {
-                window.axios.get('/api/quiz')
+            getQuestions() {
+                window.axios.get('/api/question')
                     .then((response) => {
-                        this.AllQuizzes = response.data;
+                        this.AllQuestions = response.data;
                     })
                     .catch((error) => {
                         console.log(error)
                     })
             },
-            getSingleQuiz(){
-                window.axios.get('/api/quiz/' + this.AllQuizzes)
-                    .then((response) => {
-                        this.Quiz = response.data;
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    })
-            }
         },
-        mounted() {
-            this.getQuizzes();
-            this.getSingleQuiz();
+        created() {
+            this.getQuestions();
         }
     }
 </script>
