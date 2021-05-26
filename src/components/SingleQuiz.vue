@@ -1,19 +1,25 @@
 <template>
     <h2>Hii {{quizId}}</h2>
     <div class="container">
-        <input class="form-control" type="text" v-model="question" placeholder="Type your question" required>
-    <div v-for="(value, i) in AllQuestions" v-bind:key="i">
-        {{value.question}}
-    </div>
-        <input class="form-control" type="number" v-model="Answer.optionNumber" placeholder="How many answers" required>
-        <div v-for="(number, i) in Answer.optionNumber" v-bind:key="number">
+        <div class="input-group">
+            <input class="form-control col-sm-10" type="text" v-model="question" placeholder="Type your question" required>
+            <input class="form-control col-sm-2" type="number" v-model="optionNumber" placeholder="How many answers" required>
+        </div>
+
+        <div v-for="(number, i) in optionNumber" v-bind:key="number">
             <p>Answer: {{number}} {{i}}</p>
             <div class="input-group">
-                <input class="form-control" type="text" v-model="Answer.answerBody" placeholder="Type your question" required>
-                <button><input class="bi-bag-check" type="checkbox" v-model="Answer.isCorrectAnswer">Correct answer</button>
+                <input class="form-control" type="text" v-model="Answer.answerBody" placeholder="Type your answer" required>
+                <input class="checkmark" type="checkbox" v-model="Answer.isCorrectAnswer">
             </div>
         </div>
-        <button @click="makeQuestion" class="btn btn-success mr-3">Save</button>
+        <button @click="makeQuestion" class="btn btn-success mt-3">Save</button>
+
+        <div v-for="(value, i) in AllQuestions" v-bind:key="i">
+            {{value.question}}
+            {{value.answerOptions.answerBody}}
+            {{value.answerOptions.isCorrectAnswer}}
+        </div>
     </div>
 
 </template>
@@ -26,8 +32,8 @@
                 AllQuestions: [],
                 Quiz: [],
                 question: null,
+                optionNumber: 0,
                 Answer: {
-                    optionNumber: 0,
                     answerBody: null,
                     isCorrectAnswer: false
                 }
@@ -67,5 +73,10 @@
 </script>
 
 <style scoped>
-
+    .checkmark {
+        margin: auto;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+    }
 </style>
