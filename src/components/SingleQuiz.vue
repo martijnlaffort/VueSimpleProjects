@@ -8,6 +8,7 @@
             </div>
         </div>
     </div>
+
 </template>
 <script>
     export default {
@@ -16,10 +17,29 @@
         data() {
             return {
                 AllQuizzes: [],
-                Quiz: []
+                Quiz: [],
+                Question: null
             }
         },
         methods: {
+            makeQuestion() {
+                const newQuestion = {
+                    quizName: this.Quiz.quizName,
+                    quizMaker: this.Quiz.quizMaker
+                }
+
+                window.axios.post('/api/quiz', newQuiz, {
+                    headers: {'Content-Type': 'application/json'}
+                })
+                    .then(() => {
+                        this.getQuizzes()
+                        this.toggle = false
+                        this.Quiz = {quizName: null, quizMaker: null}
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
+            },
             getQuizzes() {
                 window.axios.get('/api/quiz')
                     .then((response) => {

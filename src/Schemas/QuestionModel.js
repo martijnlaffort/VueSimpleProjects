@@ -9,7 +9,6 @@ const QuestionModel = new Schema({
     answerOptions: {
         type: AnswerOptionSchema,
         default: undefined,
-
     }
 });
 module.exports = mongoose.model('QuestionSchema', QuestionModel)
