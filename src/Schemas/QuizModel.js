@@ -9,6 +9,10 @@ const QuizModel = new Schema({
     quizMaker: {
         type: String,
         Required: 'Please enter'
+    },
+    candidateQuestionAnswers: {
+        type: [Schema.Types.ObjectId],
+        ref: 'CandidateQuesAnswer'
     }
 });
 module.exports = mongoose.model('QuizSchema', QuizModel)
